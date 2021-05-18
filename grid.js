@@ -1,4 +1,8 @@
 const canvasSketch = require("canvas-sketch");
+const { lerp } = require("canvas-sketch-util/math");
+//lerp is fn for linear interpolation
+// lerp(min,max,t)
+const random = require("canvas-sketch-util/random");
 
 const settings = {
   dimensions: [2048, 2048],
@@ -7,7 +11,7 @@ const settings = {
 const sketch = () => {
   const createGrid = () => {
     const points = [];
-    const count = 10;
+    const count = 40;
 
     for (var x = 0; x < count; x++) {
       for (var y = 0; y < count; y++) {
@@ -19,22 +23,27 @@ const sketch = () => {
     return points;
   };
 
-  const points = createGrid();
+  random.setSeed(777);
+
+  const points = createGrid().filter(() => random.value() > 0.5);
   console.log(points);
+  const margin = 250;
 
   return ({ context, width, height }) => {
     context.fillStyle = "yellow";
     context.fillRect(0, 0, width, height);
 
     points.forEach(([u, v]) => {
-      const x = u * width;
-      const y = v * height;
+      //   const x = u * width;
+      //   const y = v * height;
+      const x = lerp(margin, width - margin, u);
+      const y = lerp(margin, height - margin, v);
 
       context.beginPath();
-      context.arc(x, y, 200, 0, 2 * Math.PI, false);
+      context.arc(x, y, 15, 0, 2 * Math.PI, false);
       context.fillStyle = "blue";
       context.strokeStyle = "purple";
-      context.lineWidth = 40;
+      context.lineWidth = 25;
       context.stroke();
     });
   };
