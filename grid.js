@@ -30,7 +30,7 @@ const sketch = () => {
   const margin = 250;
 
   return ({ context, width, height }) => {
-    context.fillStyle = "yellow";
+    context.fillStyle = "pink";
     context.fillRect(0, 0, width, height);
 
     points.forEach(([u, v]) => {
@@ -42,7 +42,7 @@ const sketch = () => {
       context.beginPath();
       context.arc(x, y, 15, 0, 2 * Math.PI, false);
       context.fillStyle = "blue";
-      context.strokeStyle = "purple";
+      context.strokeStyle = "#a671aa";
       context.lineWidth = 25;
       context.stroke();
     });
